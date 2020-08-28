@@ -3,7 +3,6 @@ const sequelize = require("../config/connection");
 const { Post, User, Comment } = require("../models");
 const { response } = require("express");
 
-// all get routes
 
 router.get("/", (req, res) => {
   Post.findAll({
@@ -51,12 +50,11 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/signup", (req, res) => {
-  // if logged in redirect user to main page
   if (req.session.loggedIn) {
     res.redirect("/");
     return;
   }
-  res.render("signup"); // send user to sign up page
+  res.render("signup");
 });
 
 module.exports = router;
