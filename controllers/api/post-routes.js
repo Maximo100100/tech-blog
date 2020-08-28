@@ -3,20 +3,6 @@ const { Post, User, Comment } = require("../../models");
 const sequelize = require("../../config/connection");
 const withAuth = require("../../utils/auth");
 
-//CRUD Manipulate Database
-
-// router.post("/", withAuth, (req, res) => {
-//   Post.create({
-//     title: req.body.title,
-//     body:  req.body,
-//     user_id: req.session.user_id,
-//   })
-//     .then((dbPostData) => res.json(dbPostData))
-//     .catch((err) => {
-//       console.log(err);
-//       res.status(500).json(err);
-//     });
-// });
 router.post("/", withAuth, (req, res) => {
   const body = req.body;
   console.log(req.session.userId);
@@ -28,7 +14,6 @@ router.post("/", withAuth, (req, res) => {
       res.status(500).json(err);
     });
 });
-//updated post
 
 router.put("/:id", withAuth, (req, res) => {
   Post.update( req.body, 
@@ -58,8 +43,6 @@ router.put("/:id", withAuth, (req, res) => {
       res.status(500).json(err);
     });
 });
-
-// delete a post
 
 router.delete("/:id", (req, res) => {
   Post.destroy({

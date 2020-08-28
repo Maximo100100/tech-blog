@@ -1,9 +1,6 @@
 const router = require("express").Router();
 const { User, Post, Comment } = require("../../models");
 
-//CRUD Manipulate Database
-
-//POST/ api/users
 router.post("/", (req, res) => {
   User.create({
     username: req.body.username,
@@ -26,7 +23,6 @@ router.post("/", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  //Query operation
 
   User.findOne({
     where: {
@@ -38,9 +34,6 @@ router.post("/login", (req, res) => {
       return;
     }
 
-    // add comment syntax in front of this line in the .then()
-    // res.json( { user: dbUserData });
-    //verify user
     const validPassword = dbUserData.checkPassword(req.body.password);
     if (!validPassword) {
       res.status(400).json({ message: "Incorrect password!" });
@@ -48,7 +41,6 @@ router.post("/login", (req, res) => {
     }
 
     req.session.save(() => {
-      //declare session variables
       req.session.userId = dbUserData.id;
       req.session.username = dbUserData.username;
       req.session.loggedIn = true;
@@ -58,7 +50,6 @@ router.post("/login", (req, res) => {
   });
 });
 
-//logout 
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
@@ -70,7 +61,6 @@ router.post('/logout', (req, res) => {
   }
 });
 
-//DELETE /api/users/1
 router.delete("/:id", (req, res) => {
   User.destroy({
     where: {
