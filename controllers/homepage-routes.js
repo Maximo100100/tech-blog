@@ -3,6 +3,7 @@ const sequelize = require("../config/connection");
 const { Post, User, Comment } = require("../models");
 const { response } = require("express");
 
+// all get routes
 
 router.get("/", (req, res) => {
   Post.findAll({
@@ -30,14 +31,14 @@ router.get("/post/:id", (req, res) => {
   })
     .then((dbPostData) => {
       if (dbPostData) {
-        const posts = dbPostData.get({ plain: true });
+        const post = dbPostData.get({ plain: true });
         res.render("single-post", { post });
       } else {
         res.status(404).end();
       }
     })
     .catch((err) => {
-      res.status(500);
+      res.status(500).json(err);
     });
 });
 
@@ -50,11 +51,12 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/signup", (req, res) => {
+  // if logged in redirect user to main page
   if (req.session.loggedIn) {
     res.redirect("/");
     return;
   }
-  res.render("signup");
+  res.render("signup"); // send user to sign up page
 });
 
 module.exports = router;
